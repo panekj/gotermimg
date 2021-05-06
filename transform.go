@@ -3,8 +3,7 @@ package gotermimg
 import (
 	"image"
 
-	// Vendor
-	"resize"
+	"github.com/nfnt/resize"
 )
 
 type Transformer func(image.Image) image.Image
