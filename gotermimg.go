@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"image"
 
-	"github.com/moshen/gotermimg/terminal"
+	"github.com/panekj/gotermimg/terminal"
 )
 
 type Converter func(image.Image, Transformer) []string
@@ -19,7 +19,7 @@ const (
 	bottom = "▄"
 )
 
-// Converts image.Image img to a []string of 256 color terminal compatbile
+// ANSI - Converts image.Image img to a []string of 256 color terminal compatbile
 // ANSI using 2 spaces as a "pixel".  Applies Transformer trans to img
 // before conversion
 func ANSI(img image.Image, trans Transformer) []string {
@@ -28,7 +28,7 @@ func ANSI(img image.Image, trans Transformer) []string {
 	}
 
 	bounds := img.Bounds()
-	termimg := make([]string, bounds.Dy(), bounds.Dy())
+	termimg := make([]string, bounds.Dy())
 
 	for i := 0; i < bounds.Dy(); i++ {
 		row := ""
@@ -62,7 +62,7 @@ func ANSI(img image.Image, trans Transformer) []string {
 	return termimg
 }
 
-// Converts image.Image img to a []string of 256 color terminal compatbile
+// UTF8 - Converts image.Image img to a []string of 256 color terminal compatbile
 // UTF8 using UTF8 1/2 blocks as a "pixel".  Applies Transformer trans to img
 // before conversion
 func UTF8(img image.Image, trans Transformer) []string {
@@ -71,7 +71,7 @@ func UTF8(img image.Image, trans Transformer) []string {
 	}
 
 	bounds := img.Bounds()
-	termimg := make([]string, (bounds.Dy()/2)+1, (bounds.Dy()/2)+1)
+	termimg := make([]string, (bounds.Dy()/2)+1)
 	rownum := 0
 
 	for i := 0; i < bounds.Dy(); i += 2 {
@@ -105,7 +105,7 @@ func UTF8(img image.Image, trans Transformer) []string {
 	return termimg
 }
 
-// Prints image.Image img to os.Stdout using Converter with Transformer trans
+// PrintImage - Prints image.Image img to os.Stdout using Converter with Transformer trans
 func PrintImage(img image.Image, conv Converter, trans Transformer) {
 	for _, v := range conv(img, trans) {
 		fmt.Println(v)
